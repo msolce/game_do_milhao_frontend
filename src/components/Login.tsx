@@ -1,5 +1,5 @@
 import React from "react";
-import Request from '../services/requests'
+import Requests from '../services/requests'
 
 export default function Login(props:any){
     const { user, setUser } = props;
@@ -16,21 +16,29 @@ export default function Login(props:any){
         const user = {
             email: email.value,
             password: password.value,
-            login: false
+            login: false,
+            msg:''
         };  
-        //Aqui com o name e manda para a api
 
-        Request.login(user)
+        Requests.login(user)
                .then(response => {
-                    console.log(response)
+                    // console.log(response)
+                    return response.data
                })
-               .then(data => {
-                //gravar no logal storage o token
-               })
+               .then(data=> {
+                    // console.log(data)
+                    if(data.msg == 'Usuário ou senhas inválidos!'){
+                        setUser({...user,email:'' ,password: '',msg: data.msg})
+                        return
+                    };
+                    sessionStorage.setItem('tokenGameDoMilhao', `Bearer ${data.token}`)
+                    setUser({...user, msg: 'Logado', login: true })
 
-        //se retornar
+                })
+               .catch(e =>{
+                console.error(`Erro na API login:  ${e}`)
+               });
 
-        setUser(user);
     };
 
     return (
@@ -72,7 +80,7 @@ export default function Login(props:any){
                 </div>
             </>)}
             <h1>
-                {user.login ? user.email : ''}
+                {user.login ? user.email : user.msg}
             </h1>
         </>
     )
