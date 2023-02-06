@@ -7,6 +7,7 @@ import Partida from './components/Partida'
 // import Partida from './components/Partida';
 import Login from './components/Login';
 import Welcome from './components/Welcome';
+import CriarConta from './components/CriarConta';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     const [user, setUser] = React.useState(initialUserState);
 
     async function logout() {
+      sessionStorage.setItem('tokenGameDoMilhao','')
       setUser(initialUserState);
     };
 
@@ -31,13 +33,14 @@ function App() {
       user: '',
       _id: ''
 
-  });
-  const [pergunta, setPergunta] = React.useState({
+    });
+
+    const [pergunta, setPergunta] = React.useState({
       pergunta: '',
       respostas: [],
       pergunta_id: '',
       resposta: ''
-  });
+    });
 
 
 
@@ -47,6 +50,7 @@ function App() {
         <Routes>
           <Route path={'/'} element={<Welcome />}/>
           <Route path={'/login'} element={<Login logout = {logout} user = {user} setUser={setUser}/>}/>
+          <Route path={'/criar-conta'} element={<CriarConta />}/>
           <Route path={'/partida'} element= {
             <Partida 
               user= {user}

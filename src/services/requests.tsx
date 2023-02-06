@@ -13,6 +13,7 @@ class Requests {
                 'Authorization': token
             }})
         };
+        
     responder(data:any){
         const token = sessionStorage.getItem('tokenGameDoMilhao');
 

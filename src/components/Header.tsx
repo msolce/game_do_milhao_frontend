@@ -13,6 +13,9 @@ function Header(props:any){
                     <Link to={'/partida'} className='nav-link'>Partida</Link>                    
                 </li> 
                 <li className='nav-item'>
+                    <Link to={'/ranking'} className='nav-link'>Ranking</Link>
+                </li>
+                <li className='nav-item'>
                     <Link to={'/login'} className='nav-link'>{props.user.login ? `Logout` : `Login`}</Link>
                 </li>
             </div>

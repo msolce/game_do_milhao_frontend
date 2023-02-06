@@ -1,36 +1,45 @@
 import React from "react";
 
-export default function Opcoes(props:any){
-    const {pergunta, setPergunta}=props;
 
-    const changedState = (e:any) => {
-        setPergunta({...pergunta, resposta:e.target.value})
+export default function Opcoes(props: any) {
+    const { pergunta, setPergunta, responder, partida } = props;
+
+    const changedState = (even: any) => {
+        // console.log("🚀 ~ file: Opcoes.tsx:10 ~ changedState ~ e", e.target.checked)
+        // e.target.checked = true;
+        setPergunta({ ...pergunta, resposta: even.target.value })
     };
 
 
     return (
         <>
             <div>
-                {pergunta.respostas.map((e: any, index:number) => {
+                {pergunta.respostas.map((res: any, index: number) => {
                     return (
                         <div className="form-check" key={index}>
-                            <input 
+                            <input
                                 className="form-check-input"
                                 type="radio"
                                 name="flexRadioDefault"
-                                id="flexRadioDefault1" 
-                                value={e}
+                                id={`flexRadioDefault${index}`}
+                                value={res}
                                 onChange={changedState}
+                                checked={res == pergunta.resposta ? true : false}
                             />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                {e}
+                            <label className="form-check-label" htmlFor={`flexRadioDefault${index}`}>
+                                {res}
                             </label>
                         </div>
-                        )
-                    })
-                }
+                    )
+                })}
             </div>
-            {pergunta.resposta}
+            <div>
+                <button onClick={responder} className="btn btn-success">Responder</button>
+            </div>
+            
+            <div>
+                Sua resposta é:     {pergunta.resposta}
+            </div>
         </>
     )
 }
